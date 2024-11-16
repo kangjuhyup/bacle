@@ -67,5 +67,5 @@ jobs:
             docker pull ghcr.io/${{ github.repository }}/service:latest
             docker stop bacle-api || true
             docker rm bacle-api || true
-            docker run -d -p 3003:3003 --network my-network --name bacle-api ghcr.io/${{ github.repository }}/service:latest
+            docker run -d -p 4000:4000 --network my-network --name bacle-api ghcr.io/${{ github.repository }}/service:latest
           EOF
