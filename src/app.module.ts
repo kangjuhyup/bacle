@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { DatabaseModule } from '@database/database.module';
 import { GroupModule } from '@domain/group/group.module';
@@ -15,7 +15,25 @@ import { LoggerModule } from 'nestjs-pino';
     HttpModule.register({
       timeout: 5000,
     }),
-    LoggerModule,
+    LoggerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        pinoHttp: {
+          level: config.get<string>('LOG_LEVEL', 'info'),
+          transport:
+            process.env.NODE_ENV !== 'production'
+              ? {
+                  target: 'pino-pretty',
+                  options: {
+                    colorize: true,
+                    singleLine: true,
+                    translateTime: 'SYS:standard',
+                  },
+                }
+              : undefined,
+        },
+      }),
+    }),
     DatabaseModule,
     ChatModule,
     GroupModule,
