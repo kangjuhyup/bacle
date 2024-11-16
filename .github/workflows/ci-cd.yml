@@ -42,7 +42,7 @@ jobs:
           echo "DB_PWD=${{ vars.MONGO_DB_NAME }}" >> .env
 
       - name: docker build & push
-        run: docker buildx build -f ./packages/server/Dockerfile --platform linux/amd64,linux/arm64 -t ghcr.io/${{ github.repository }}/service:latest --push .
+        run: docker buildx build -f ./Dockerfile --platform linux/amd64,linux/arm64 -t ghcr.io/${{ github.repository }}/service:latest --push .
 
   deploy:
     runs-on: ubuntu-latest
