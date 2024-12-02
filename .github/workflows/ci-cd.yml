@@ -36,10 +36,10 @@ jobs:
 
       - name: create .env
         run: |
-          echo "DB_HOST=${{ secrets.MONGO_HOST }}" >> .env
-          echo "DB_NAME=${{ secrets.MONGO_USER }}" >> .env
-          echo "DB_PORT=${{ secrets.MONGO_PASSWORD }}" >> .env
-          echo "DB_PWD=${{ vars.MONGO_DB_NAME }}" >> .env
+          echo "MONGO_HOST=${{ secrets.MONGO_HOST }}" >> .env
+          echo "MONGO_USER=${{ secrets.MONGO_USER }}" >> .env
+          echo "MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }}" >> .env
+          echo "MONGO_DB_NAME=${{ vars.MONGO_DB_NAME }}" >> .env
 
       - name: docker build & push
         run: docker buildx build -f ./Dockerfile --platform linux/amd64,linux/arm64 -t ghcr.io/${{ github.repository }}/service:latest --push .
