@@ -16,10 +16,11 @@ export abstract class BaseGuard {
 
     try {
       const response = await firstValueFrom(this.http.get(url, { headers }));
-      return response.data;
+      if(response.data) return response.data;
+      else throw new Error('바클 profile 호출 에러');
     } catch (error) {
       console.error('Failed to fetch user profile:', error.message);
-      throw new WsException('Failed to fetch user profile');
+      throw new Error('바클 profile 연결 실패');
     }
   }
 }
