@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ChatService } from './service/chat.service';
 import { ChatFacade } from './chat.facade';
 import { ChatGateway } from './chat.gateway';

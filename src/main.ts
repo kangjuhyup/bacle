@@ -3,6 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from '@middleware/interceptor/response.interceptor';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
+import { RedisIoAdapter } from '@middleware/adapter/io.adpater';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -18,8 +19,11 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.enableCors({
-    origin: 'https://bacl.gg',
+    origin: '*',
   });
+  const redisIoAdapter = new RedisIoAdapter(app);
+  await redisIoAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisIoAdapter);
   await app.listen(4000);
 }
 bootstrap();

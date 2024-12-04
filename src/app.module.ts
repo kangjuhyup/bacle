@@ -9,12 +9,6 @@ import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    HttpModule.register({
-      timeout: 5000,
-    }),
     LoggerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -33,6 +27,12 @@ import { LoggerModule } from 'nestjs-pino';
               : undefined,
         },
       }),
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    HttpModule.register({
+      timeout: 5000,
     }),
     DatabaseModule,
     ChatModule,

@@ -4,44 +4,66 @@ import {
   WebSocketServer,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  MessageBody,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatFacade } from './chat.facade';
 import { WsUser } from '@auth/decorator/ws.decorator';
 import { User } from '@auth/user';
-import { UseGuards } from '@nestjs/common';
+import { Logger, OnModuleInit, UseGuards } from '@nestjs/common';
 import { WsJwtAuthGuard } from '@auth/guard/ws.guard';
 
-@WebSocketGateway({
+@WebSocketGateway(4001, {
+  namespace: 'chat',
   cors: {
-    origin: 'https://bacle.gg',
+    origin: ['http://localhost'],
+    credentials: true,
   },
+  pingTimeout: 60000, // 60초
+  pingInterval: 25000, // 25초
 })
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway
+  implements OnModuleInit, OnGatewayConnection, OnGatewayDisconnect
+{
+  private logger: Logger = new Logger(ChatGateway.name);
+
   constructor(private readonly chatFacade: ChatFacade) {}
 
   @WebSocketServer()
   server: Server;
 
+  onModuleInit() {
+    console.log('ChatGateway initialized');
+  }
+
   private users: Map<string, string> = new Map(); // 소켓 ID와 사용자 ID 매핑
 
   handleConnection(client: Socket) {
-    console.log(`Client connected: ${client.id}`);
+    try {
+      console.log(`Client connected: ${client.id}`);
+      // 추가 처리 로직
+    } catch (error) {
+      console.error('Error during connection:', error);
+      client.disconnect(); // 명시적으로 연결 종료
+    }
   }
 
   handleDisconnect(client: Socket) {
-    console.log(`Client disconnected: ${client.id}`);
+    this.logger.debug(`Client disconnected: ${client.id}`);
     this.users.delete(client.id); // 연결 해제 시 사용자 제거
   }
 
   @SubscribeMessage('joinRoom')
-  @UseGuards(WsJwtAuthGuard)
+  // @UseGuards(WsJwtAuthGuard)
   async handleJoinRoom(
-    client: Socket,
-    payload: { room: string },
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: any,
     @WsUser() user: User,
   ) {
-    const { room } = payload;
+    console.log(`joinRoom`);
+    console.log(data);
+    const { room } = data;
 
     // 사용자를 룸에 추가
     client.join(room);
