@@ -3,7 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from '@middleware/interceptor/response.interceptor';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
-import * as bodyParser from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
