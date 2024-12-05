@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GroupController } from './group.controller';
 import { GroupFacade } from './group.facade';
 import { GroupService } from './service/group.service';
+import { HttpModule } from '@nestjs/axios';
 
 const services = [GroupService];
 
