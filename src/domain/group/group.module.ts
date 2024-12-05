@@ -7,7 +7,12 @@ import { GroupService } from './service/group.service';
 const services = [GroupService];
 
 @Module({
-  imports: [ChatModule],
+  imports: [
+    ChatModule,
+    HttpModule.register({
+      timeout: 5000,
+    }),
+  ],
   controllers: [GroupController],
   providers: [...services, GroupFacade],
   exports: [...services],
