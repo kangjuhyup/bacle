@@ -5,13 +5,21 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { BaseGuard } from './base.guard';
+import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class HttpJwtAuthGuard extends BaseGuard implements CanActivate {
+  constructor(
+    config: ConfigService,
+    http: HttpService,
+  ) {
+    super(config, http);
+  }
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    // Authorization 헤더에서 Bearer 토큰 추출
     const token = request.headers?.authorization?.split(' ')[1];
 
     if (!token) {
@@ -23,7 +31,7 @@ export class HttpJwtAuthGuard extends BaseGuard implements CanActivate {
       request.user = profile;
     } catch (error) {
       throw new UnauthorizedException(
-        `Invalid token or unable to fetch profile : ${error.message}`,
+        `Invalid token or unable to fetch profile: ${error.message}`,
       );
     }
 
