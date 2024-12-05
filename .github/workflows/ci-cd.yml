@@ -32,7 +32,7 @@ jobs:
           cache: 'yarn'
 
       - name: install packages
-        run: yarn install --immutable
+        run: yarn install
 
       - name: create .env
         run: |
