@@ -23,7 +23,7 @@ export class HttpJwtAuthGuard extends BaseGuard implements CanActivate {
       request.user = profile;
     } catch (error) {
       throw new UnauthorizedException(
-        'Invalid token or unable to fetch profile',
+        `Invalid token or unable to fetch profile : ${error.message}`,
       );
     }
 
