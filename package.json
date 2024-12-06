@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^9",
     "@nestjs/platform-socket.io": "^9",
     "@nestjs/websockets": "^9",
+    "@socket.io/redis-adapter": "^8.3.0",
     "axios": "^1.7.7",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
@@ -42,7 +43,9 @@
     "redis": "^4.7.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "socket.io-adapter": "^2.5.5",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -65,24 +68,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.2.0",
-    "typescript": "^5.0.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "typescript": "5.6.3"
   },
   "packageManager": "yarn@4.5.0"
 }

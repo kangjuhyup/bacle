@@ -40,6 +40,7 @@ const RAW_RUNTIME_STATE =
           ["@nestjs/schematics", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.2.0"],\
           ["@nestjs/testing", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.4.3"],\
           ["@nestjs/websockets", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.4.3"],\
+          ["@socket.io/redis-adapter", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:8.3.0"],\
           ["@types/express", "npm:4.17.21"],\
           ["@types/jest", "npm:29.5.1"],\
           ["@types/node", "npm:18.16.12"],\
@@ -64,13 +65,15 @@ const RAW_RUNTIME_STATE =
           ["reflect-metadata", "npm:0.1.14"],\
           ["rxjs", "npm:7.8.1"],\
           ["socket.io", "npm:4.8.1"],\
+          ["socket.io-adapter", "npm:2.5.5"],\
+          ["socket.io-client", "npm:4.8.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["supertest", "npm:6.3.4"],\
           ["ts-jest", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:29.1.0"],\
           ["ts-loader", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.5.1"],\
           ["ts-node", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:10.9.2"],\
           ["tsconfig-paths", "npm:4.2.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -1829,7 +1832,7 @@ const RAW_RUNTIME_STATE =
           ["@types/typescript", null],\
           ["jsonc-parser", "npm:3.2.0"],\
           ["pluralize", "npm:8.0.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/typescript",\
@@ -2146,6 +2149,31 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/@socket.io-component-emitter-npm-3.1.2-bc4133d33f-10c0.zip/node_modules/@socket.io/component-emitter/",\
         "packageDependencies": [\
           ["@socket.io/component-emitter", "npm:3.1.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@socket.io/redis-adapter", [\
+      ["npm:8.3.0", {\
+        "packageLocation": "../../.yarn/berry/cache/@socket.io-redis-adapter-npm-8.3.0-bd4f35b4e6-10c0.zip/node_modules/@socket.io/redis-adapter/",\
+        "packageDependencies": [\
+          ["@socket.io/redis-adapter", "npm:8.3.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:8.3.0", {\
+        "packageLocation": "./.yarn/__virtual__/@socket.io-redis-adapter-virtual-78ab7a61ef/3/.yarn/berry/cache/@socket.io-redis-adapter-npm-8.3.0-bd4f35b4e6-10c0.zip/node_modules/@socket.io/redis-adapter/",\
+        "packageDependencies": [\
+          ["@socket.io/redis-adapter", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:8.3.0"],\
+          ["@types/socket.io-adapter", null],\
+          ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
+          ["notepack.io", "npm:3.0.1"],\
+          ["socket.io-adapter", "npm:2.5.5"],\
+          ["uid2", "npm:1.0.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/socket.io-adapter",\
+          "socket.io-adapter"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2605,7 +2633,7 @@ const RAW_RUNTIME_STATE =
           ["natural-compare-lite", "npm:1.4.0"],\
           ["semver", "npm:7.6.3"],\
           ["tsutils", "virtual:56dcce19cb9a64e4a98b64018d43365b1c05a6a94b9b09ab9d648864221252824572240e8b752ead5e99ea9701fc72e9a84f7a47b38caf18ba410f2ea3ceb595#npm:3.21.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -2637,7 +2665,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/typescript-estree", "virtual:5b08860095e0be7bc2d7bfe07b6840cfb292dde29c5c78d6b4c5cdc86bca13a8f029f7cb661bb6fd99a1cd19a726b124b23bc425f54f85b5fd5db743aad79f3b#npm:5.62.0"],\
           ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
           ["eslint", "npm:8.57.1"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -2678,7 +2706,7 @@ const RAW_RUNTIME_STATE =
           ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
           ["eslint", "npm:8.57.1"],\
           ["tsutils", "virtual:56dcce19cb9a64e4a98b64018d43365b1c05a6a94b9b09ab9d648864221252824572240e8b752ead5e99ea9701fc72e9a84f7a47b38caf18ba410f2ea3ceb595#npm:3.21.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -2738,7 +2766,7 @@ const RAW_RUNTIME_STATE =
           ["is-glob", "npm:4.0.3"],\
           ["semver", "npm:7.6.3"],\
           ["tsutils", "virtual:56dcce19cb9a64e4a98b64018d43365b1c05a6a94b9b09ab9d648864221252824572240e8b752ead5e99ea9701fc72e9a84f7a47b38caf18ba410f2ea3ceb595#npm:3.21.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/typescript",\
@@ -3481,6 +3509,7 @@ const RAW_RUNTIME_STATE =
           ["@nestjs/schematics", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.2.0"],\
           ["@nestjs/testing", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.4.3"],\
           ["@nestjs/websockets", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.4.3"],\
+          ["@socket.io/redis-adapter", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:8.3.0"],\
           ["@types/express", "npm:4.17.21"],\
           ["@types/jest", "npm:29.5.1"],\
           ["@types/node", "npm:18.16.12"],\
@@ -3505,13 +3534,15 @@ const RAW_RUNTIME_STATE =
           ["reflect-metadata", "npm:0.1.14"],\
           ["rxjs", "npm:7.8.1"],\
           ["socket.io", "npm:4.8.1"],\
+          ["socket.io-adapter", "npm:2.5.5"],\
+          ["socket.io-client", "npm:4.8.1"],\
           ["source-map-support", "npm:0.5.21"],\
           ["supertest", "npm:6.3.4"],\
           ["ts-jest", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:29.1.0"],\
           ["ts-loader", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:9.5.1"],\
           ["ts-node", "virtual:97f9700d246ac851feeaf0027552d5d0b2e9a516ae6a7c08425f1eb1b472084f2e05ab7fcdde3e1a6bbb06294121f7b4bdc79f3aa7f8fe24b092a16eb69d9886#npm:10.9.2"],\
           ["tsconfig-paths", "npm:4.2.0"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -4580,7 +4611,21 @@ const RAW_RUNTIME_STATE =
           ["cors", "npm:2.8.5"],\
           ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
           ["engine.io-parser", "npm:5.2.3"],\
-          ["ws", "virtual:5e1ad2a7862aee833ef56e6438cd24aa30efe06c23147978b84e2c2c2130cbe542568ae38f491d993931bedd1ed54b9b0e4d2fa2ede5d05f44e07ee33fd09dc8#npm:8.17.1"]\
+          ["ws", "virtual:7a0505537f63825f62aaaf982168c2b7c1e816756656d44af98202b8d07990e163024e7dadf5587aa11d691887401ca8792ff06467da4d479c747705c9e87544#npm:8.17.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["engine.io-client", [\
+      ["npm:6.6.2", {\
+        "packageLocation": "../../.yarn/berry/cache/engine.io-client-npm-6.6.2-5eef7f59d1-10c0.zip/node_modules/engine.io-client/",\
+        "packageDependencies": [\
+          ["engine.io-client", "npm:6.6.2"],\
+          ["@socket.io/component-emitter", "npm:3.1.2"],\
+          ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
+          ["engine.io-parser", "npm:5.2.3"],\
+          ["ws", "virtual:7a0505537f63825f62aaaf982168c2b7c1e816756656d44af98202b8d07990e163024e7dadf5587aa11d691887401ca8792ff06467da4d479c747705c9e87544#npm:8.17.1"],\
+          ["xmlhttprequest-ssl", "npm:2.1.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7627,6 +7672,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["notepack.io", [\
+      ["npm:3.0.1", {\
+        "packageLocation": "../../.yarn/berry/cache/notepack.io-npm-3.0.1-6b95bad7b3-10c0.zip/node_modules/notepack.io/",\
+        "packageDependencies": [\
+          ["notepack.io", "npm:3.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["npm-run-path", [\
       ["npm:4.0.1", {\
         "packageLocation": "../../.yarn/berry/cache/npm-run-path-npm-4.0.1-7aebd8bab3-10c0.zip/node_modules/npm-run-path/",\
@@ -8780,7 +8834,20 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["socket.io-adapter", "npm:2.5.5"],\
           ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
-          ["ws", "virtual:5e1ad2a7862aee833ef56e6438cd24aa30efe06c23147978b84e2c2c2130cbe542568ae38f491d993931bedd1ed54b9b0e4d2fa2ede5d05f44e07ee33fd09dc8#npm:8.17.1"]\
+          ["ws", "virtual:7a0505537f63825f62aaaf982168c2b7c1e816756656d44af98202b8d07990e163024e7dadf5587aa11d691887401ca8792ff06467da4d479c747705c9e87544#npm:8.17.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["socket.io-client", [\
+      ["npm:4.8.1", {\
+        "packageLocation": "../../.yarn/berry/cache/socket.io-client-npm-4.8.1-eb1c9f0ea4-10c0.zip/node_modules/socket.io-client/",\
+        "packageDependencies": [\
+          ["socket.io-client", "npm:4.8.1"],\
+          ["@socket.io/component-emitter", "npm:3.1.2"],\
+          ["debug", "virtual:c9e1a4b59e37cb479517edede3bf2093b28c0ca1a9d0e517f3c345075bd1e468980b94b4957e389116607ee7155441dfd7d09e19a4229d5d09bcf06244401590#npm:4.3.7"],\
+          ["engine.io-client", "npm:6.6.2"],\
+          ["socket.io-parser", "npm:4.2.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9326,7 +9393,7 @@ const RAW_RUNTIME_STATE =
           ["lodash.memoize", "npm:4.1.2"],\
           ["make-error", "npm:1.3.6"],\
           ["semver", "npm:7.6.3"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"],\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
           ["yargs-parser", "npm:21.1.1"]\
         ],\
         "packagePeers": [\
@@ -9365,7 +9432,7 @@ const RAW_RUNTIME_STATE =
           ["micromatch", "npm:4.0.8"],\
           ["semver", "npm:7.6.3"],\
           ["source-map", "npm:0.7.4"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"],\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
           ["webpack", null]\
         ],\
         "packagePeers": [\
@@ -9406,7 +9473,7 @@ const RAW_RUNTIME_STATE =
           ["create-require", "npm:1.1.1"],\
           ["diff", "npm:4.0.2"],\
           ["make-error", "npm:1.3.6"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"],\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
           ["v8-compile-cache-lib", "npm:3.0.1"],\
           ["yn", "npm:3.1.1"]\
         ],\
@@ -9483,7 +9550,7 @@ const RAW_RUNTIME_STATE =
           ["tsutils", "virtual:56dcce19cb9a64e4a98b64018d43365b1c05a6a94b9b09ab9d648864221252824572240e8b752ead5e99ea9701fc72e9a84f7a47b38caf18ba410f2ea3ceb595#npm:3.21.0"],\
           ["@types/typescript", null],\
           ["tslib", "npm:1.14.1"],\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "packagePeers": [\
           "@types/typescript",\
@@ -9569,10 +9636,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
-      ["patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40", {\
-        "packageLocation": "../../.yarn/berry/cache/typescript-patch-fc62289e64-10c0.zip/node_modules/typescript/",\
+      ["patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40", {\
+        "packageLocation": "../../.yarn/berry/cache/typescript-patch-8964a48ba3-10c0.zip/node_modules/typescript/",\
         "packageDependencies": [\
-          ["typescript", "patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9583,6 +9650,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["uid", "npm:2.0.2"],\
           ["@lukeed/csprng", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["uid2", [\
+      ["npm:1.0.0", {\
+        "packageLocation": "../../.yarn/berry/cache/uid2-npm-1.0.0-d1b192e95a-10c0.zip/node_modules/uid2/",\
+        "packageDependencies": [\
+          ["uid2", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9950,10 +10026,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:5e1ad2a7862aee833ef56e6438cd24aa30efe06c23147978b84e2c2c2130cbe542568ae38f491d993931bedd1ed54b9b0e4d2fa2ede5d05f44e07ee33fd09dc8#npm:8.17.1", {\
-        "packageLocation": "./.yarn/__virtual__/ws-virtual-f640a9d5b6/3/.yarn/berry/cache/ws-npm-8.17.1-f57fb24a2c-10c0.zip/node_modules/ws/",\
+      ["virtual:7a0505537f63825f62aaaf982168c2b7c1e816756656d44af98202b8d07990e163024e7dadf5587aa11d691887401ca8792ff06467da4d479c747705c9e87544#npm:8.17.1", {\
+        "packageLocation": "./.yarn/__virtual__/ws-virtual-93367723d8/3/.yarn/berry/cache/ws-npm-8.17.1-f57fb24a2c-10c0.zip/node_modules/ws/",\
         "packageDependencies": [\
-          ["ws", "virtual:5e1ad2a7862aee833ef56e6438cd24aa30efe06c23147978b84e2c2c2130cbe542568ae38f491d993931bedd1ed54b9b0e4d2fa2ede5d05f44e07ee33fd09dc8#npm:8.17.1"],\
+          ["ws", "virtual:7a0505537f63825f62aaaf982168c2b7c1e816756656d44af98202b8d07990e163024e7dadf5587aa11d691887401ca8792ff06467da4d479c747705c9e87544#npm:8.17.1"],\
           ["@types/bufferutil", null],\
           ["@types/utf-8-validate", null],\
           ["bufferutil", null],\
@@ -9981,6 +10057,15 @@ const RAW_RUNTIME_STATE =
           "@types/utf-8-validate",\
           "bufferutil",\
           "utf-8-validate"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["xmlhttprequest-ssl", [\
+      ["npm:2.1.2", {\
+        "packageLocation": "../../.yarn/berry/cache/xmlhttprequest-ssl-npm-2.1.2-7d8e3817bc-10c0.zip/node_modules/xmlhttprequest-ssl/",\
+        "packageDependencies": [\
+          ["xmlhttprequest-ssl", "npm:2.1.2"]\
         ],\
         "linkType": "HARD"\
       }]\

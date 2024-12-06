@@ -1,10 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 
 export abstract class BaseGuard {
-  private logger: Logger = new Logger(BaseGuard.name);
   constructor(
     private readonly config: ConfigService,
     private readonly http: HttpService,
@@ -20,7 +18,7 @@ export abstract class BaseGuard {
       if (response.data) return response.data;
       else throw new Error('바클 profile 호출 에러');
     } catch (error) {
-      this.logger.error('Failed to fetch user profile:', error.message);
+      console.error('Failed to fetch user profile:', error.message);
       throw new Error('바클 profile 연결 실패');
     }
   }

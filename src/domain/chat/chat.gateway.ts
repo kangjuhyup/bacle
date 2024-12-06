@@ -42,27 +42,27 @@ export class ChatGateway
   handleConnection(client: Socket) {
     try {
       console.log(`Client connected: ${client.id}`);
-      // 추가 처리 로직
     } catch (error) {
       console.error('Error during connection:', error);
-      client.disconnect(); // 명시적으로 연결 종료
+      client.disconnect();
     }
   }
 
   handleDisconnect(client: Socket) {
     this.logger.debug(`Client disconnected: ${client.id}`);
-    this.users.delete(client.id); // 연결 해제 시 사용자 제거
+    this.users.delete(client.id);
   }
 
   @SubscribeMessage('joinRoom')
-  // @UseGuards(WsJwtAuthGuard)
+  @UseGuards(WsJwtAuthGuard)
   async handleJoinRoom(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data: any,
+    @MessageBody()
+    data: {
+      room: string;
+    },
     @WsUser() user: User,
   ) {
-    console.log(`joinRoom`);
-    console.log(data);
     const { room } = data;
 
     // 사용자를 룸에 추가
