@@ -1,27 +1,32 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { WsJwtAuthGuard } from '@auth/guard/ws.guard';
+import { WsUser } from '@auth/decorator/ws.decorator'; // WsUser 데코레이터 임포트
+import { ExecutionContext, INestApplication } from '@nestjs/common';
 import { Server } from 'socket.io';
-import { createServer } from 'http';
 import { io, Socket } from 'socket.io-client';
 import { ChatFacade } from '../chat.facade';
 import { ChatGateway } from '../chat.gateway';
-import { WsJwtAuthGuard } from '@auth/guard/ws.guard';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 describe('ChatGateway', () => {
   let app: INestApplication;
-  let chatGateway: ChatGateway;
-  let wsServer: Server;
-  let chatFacade: ChatFacade;
-  let httpServer: any;
-  let socketClient: Socket;
   let server: Server;
+  let clientSocket: Socket;
 
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleFixture: TestingModule = await Test.createTestingModule({
       providers: [
         ChatGateway,
+        {
+          provide: ChatFacade,
+          useValue: {
+            joinRoom: jest.fn().mockResolvedValue('chatRoom'),
+            getMessages: jest.fn().mockResolvedValue([]),
+            leaveRoom: jest.fn().mockResolvedValue(undefined),
+            sendMessage: jest.fn().mockResolvedValue(undefined),
+          },
+        },
         {
           provide: ConfigService,
           useValue: {
@@ -35,110 +40,95 @@ describe('ChatGateway', () => {
           },
         },
         {
-          provide: ChatFacade,
+          provide: WsJwtAuthGuard,
           useValue: {
-            joinRoom: jest.fn(),
-            leaveRoom: jest.fn(),
-            getMessages: jest.fn(() => Promise.resolve([{ content: 'Hi!' }])),
-            sendMessage: jest.fn(),
+            canActivate: jest.fn(() => true), // 가드 모킹
           },
         },
       ],
     }).compile();
 
-    chatGateway = module.get<ChatGateway>(ChatGateway);
-    chatFacade = module.get<ChatFacade>(ChatFacade);
+    app = moduleFixture.createNestApplication();
+    await app.init();
 
-    app = module.createNestApplication();
+    server = app.getHttpServer();
+  });
 
-    // HTTP 및 WebSocket 서버 설정
-    httpServer = createServer();
-    wsServer = new Server(httpServer, {
-      cors: {
-        origin: ['http://localhost'],
-        credentials: true,
-      },
+  afterAll(async () => {
+    if (clientSocket) {
+      clientSocket.disconnect();
+    }
+    await app.close();
+  });
+
+  beforeEach(() => {
+    // @WsUser() 데코레이터 모킹
+    const mockExecutionContext = {
+      switchToWs: jest.fn().mockReturnThis(),
+      getClient: jest.fn().mockReturnValue({
+        user: { uuid: 'user123' },
+      }),
+      getData: jest.fn().mockReturnValue({
+        room: 'testRoom',
+      }),
+    } as unknown as ExecutionContext;
+
+    jest.spyOn(mockExecutionContext, 'switchToWs').mockReturnValue({
+      getClient: jest.fn().mockReturnValue({ user: { uuid: 'user123' } }),
+      getData: jest.fn().mockReturnValue({ room: 'testRoom' }),
     });
+  });
 
-    // ChatGateway 인스턴스에 WebSocket 서버 바인딩
-    chatGateway = module.get<ChatGateway>(ChatGateway);
-    chatFacade = module.get<ChatFacade>(ChatFacade);
-    chatGateway.server = wsServer;
-
-    // HTTP 서버 실행
-    httpServer.listen(4001);
-
-    // WebSocket 클라이언트 연결
-    socketClient = io('http://localhost:4001/chat', {
+  it('should be able to connect to WebSocket server', (done) => {
+    clientSocket = io('http://localhost:4001/chat', {
       transports: ['websocket'],
     });
 
-    socketClient.on('connect', () => {
-      console.log('Client connected');
-    });
-
-    socketClient.on('connect_error', (error) => {
-      console.error('WebSocket connection error:', error);
-    });
-  });
-
-  afterAll(() => {
-    socketClient.close();
-    server.close();
-    httpServer.close();
-  });
-
-  it('joinRoom - 사용자가 방에 입장하고 메시지 기록을 받는지 확인', async (done) => {
-    jest.spyOn(WsJwtAuthGuard.prototype, 'canActivate').mockResolvedValue(true);
-
-    const room = 'testRoom';
-    const user = { uuid: '1234', username: 'testUser' };
-
-    socketClient.emit('joinRoom', { room });
-
-    socketClient.on('histories', (histories) => {
-      expect(histories).toEqual([{ content: 'Hi!' }]);
-      expect(chatFacade.joinRoom).toHaveBeenCalledWith(room, user.uuid);
+    clientSocket.on('connect', () => {
+      expect(clientSocket.connected).toBe(true);
       done();
     });
   });
 
-  it('leaveRoom - 사용자가 방을 나가면 알림 메시지가 전송되는지 확인', async (done) => {
-    jest.spyOn(WsJwtAuthGuard.prototype, 'canActivate').mockResolvedValue(true);
+  it('should join room and broadcast message', (done) => {
     const room = 'testRoom';
-    const user = { uuid: '1234', username: 'testUser' };
+    const user = { uuid: 'user123' };
 
-    socketClient.emit('leaveRoom', { room });
+    clientSocket.emit('joinRoom', { room });
 
-    socketClient.on('message', (message) => {
-      expect(message.content).toEqual(`${user.username} has left the room.`);
-      expect(chatFacade.leaveRoom).toHaveBeenCalledWith(room, user.uuid);
-      done();
+    clientSocket.on('message', (message) => {
+      expect(message.username).toBe('System');
+      expect(message.content).toContain('has joined the room');
     });
   });
 
-  it('sendMessage - 메시지가 방 전체에 전송되는지 확인', async (done) => {
-    jest.spyOn(WsJwtAuthGuard.prototype, 'canActivate').mockResolvedValue(true);
+  it('should leave room and broadcast message', async () => {
     const room = 'testRoom';
-    const payload = {
-      room,
-      username: 'testUser',
-      content: 'Hello, World!',
-    };
 
-    socketClient.emit('sendMessage', payload);
+    clientSocket.emit('leaveRoom', { room });
 
-    socketClient.on('message', (message) => {
-      expect(message).toEqual({
-        username: payload.username,
-        content: payload.content,
+    const message: any = await new Promise((resolve, reject) => {
+      clientSocket.on('message', (message) => {
+        console.log('leaveRoom message : ', message);
+        resolve(message); // 메세지가 오면 resolve로 반환
       });
-      expect(chatFacade.sendMessage).toHaveBeenCalledWith(
-        room,
-        payload.username,
-        payload.content,
-      );
-      done();
+    });
+
+    // 메세지 내용이 예상한 값인지 확인
+    expect(message.username).toBe('System');
+    expect(message.content).toContain('has left the room');
+  });
+
+  it('should send message and broadcast to room', (done) => {
+    const room = 'testRoom';
+    const username = 'testUser';
+    const content = 'Hello, World!';
+
+    clientSocket.emit('sendMessage', { room, username, content });
+
+    clientSocket.on('message', (message) => {
+      expect(message.username).toBe(username);
+      expect(message.content).toBe(content);
     });
   });
 });

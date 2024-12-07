@@ -23,9 +23,7 @@ import { WsJwtAuthGuard } from '@auth/guard/ws.guard';
   pingTimeout: 60000, // 60초
   pingInterval: 25000, // 25초
 })
-export class ChatGateway
-  implements OnModuleInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private logger: Logger = new Logger(ChatGateway.name);
 
   constructor(private readonly chatFacade: ChatFacade) {}
@@ -33,15 +31,11 @@ export class ChatGateway
   @WebSocketServer()
   server: Server;
 
-  onModuleInit() {
-    console.log('ChatGateway initialized');
-  }
-
   private users: Map<string, string> = new Map(); // 소켓 ID와 사용자 ID 매핑
 
   handleConnection(client: Socket) {
     try {
-      console.log(`Client connected: ${client.id}`);
+      this.logger.log(`Client connected: ${client.id}`);
     } catch (error) {
       console.error('Error during connection:', error);
       client.disconnect();
@@ -78,7 +72,7 @@ export class ChatGateway
       content: `${user} has joined the room.`,
     });
 
-    console.log(`${user} joined room: ${chatRoom}`);
+    this.logger.log(`${user} joined room: ${chatRoom}`);
   }
 
   @SubscribeMessage('leaveRoom')
@@ -100,7 +94,7 @@ export class ChatGateway
       username: 'System',
       content: `${user} has left the room.`,
     });
-    console.log(`${user} left room: ${room}`);
+    this.logger.log(`${user} left room: ${room}`);
   }
 
   @SubscribeMessage('sendMessage')
@@ -112,6 +106,6 @@ export class ChatGateway
     this.chatFacade.sendMessage(room, username, content);
     // 룸에 메시지 전송
     this.server.to(room).emit('message', { username, content });
-    console.log(`Message from ${username} to room ${room}: ${content}`);
+    this.logger.log(`Message from ${username} to room ${room}: ${content}`);
   }
 }

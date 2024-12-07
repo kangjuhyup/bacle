@@ -41,7 +41,6 @@ describe('WsJwtAuthGuard (Real API)', () => {
 
     // client.user가 실제 API에서 받은 데이터를 포함하는지 확인
     expect(mockClient.user).toBeDefined();
-    console.log('Fetched profile:', mockClient.user);
   });
 
   it('should throw WsException if token is invalid with real API', async () => {
