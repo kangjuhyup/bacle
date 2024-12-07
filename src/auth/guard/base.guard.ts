@@ -1,6 +1,5 @@
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { WsException } from '@nestjs/websockets';
 import { firstValueFrom } from 'rxjs';
 
 export abstract class BaseGuard {
@@ -16,7 +15,7 @@ export abstract class BaseGuard {
 
     try {
       const response = await firstValueFrom(this.http.get(url, { headers }));
-      if(response.data) return response.data;
+      if (response.data) return response.data;
       else throw new Error('바클 profile 호출 에러');
     } catch (error) {
       console.error('Failed to fetch user profile:', error.message);

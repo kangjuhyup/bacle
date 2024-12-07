@@ -9,7 +9,7 @@ import { Group } from '@database/schema/group';
 
 describe('GroupService', () => {
   let groupService: GroupService;
-  let groupRepository: Partial<GroupRepository>;
+  let groupRepository: jest.Mocked<GroupRepository>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -27,7 +27,9 @@ describe('GroupService', () => {
     }).compile();
 
     groupService = module.get<GroupService>(GroupService);
-    groupRepository = module.get<GroupRepository>(GroupRepository);
+    groupRepository = module.get(
+      GroupRepository,
+    ) as jest.Mocked<GroupRepository>;
   });
 
   describe('createGroup', () => {
@@ -84,8 +86,10 @@ describe('GroupService', () => {
       };
       const user: User = { uuid: 'user123', username: 'testUser' } as User;
 
-      const now = ZonedDateTime.now(ZoneId.SYSTEM);
-      const twentyFourHoursAgo = now.minus(Duration.ofHours(24));
+      const mockNow = ZonedDateTime.parse('2023-12-01T12:00:00+00:00');
+      jest.spyOn(ZonedDateTime, 'now').mockReturnValue(mockNow);
+
+      const twentyFourHoursAgo = mockNow.minus(Duration.ofHours(24));
 
       groupRepository.findGroups.mockResolvedValue(mockGroups);
 
@@ -100,7 +104,7 @@ describe('GroupService', () => {
     });
 
     it('should return all groups if "mine" is false', async () => {
-      const mockGroups = [{ name: 'Group 1' }, { name: 'Group 2' }];
+      const mockGroups = [{ name: 'Group 1' }, { name: 'Group 2' }] as any[];
       const dto: GetGroupsRequest = {
         mine: false,
         level: 1,

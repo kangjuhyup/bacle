@@ -1,9 +1,14 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
 import { BaseGuard } from './base.guard';
+import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class WsJwtAuthGuard extends BaseGuard implements CanActivate {
+  constructor(config: ConfigService, http: HttpService) {
+    super(config, http);
+  }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const client = context.switchToWs().getClient();
     const token = client.handshake?.headers?.authorization?.split(' ')[1]; // Bearer 토큰 추출
